@@ -1,0 +1,40 @@
+{
+  "$id": "Operation.schema.json",
+  "title": "Operation",
+  "description": "Asset buy and sell operations.",
+  "type": "object",
+  "properties": {
+    "date": {
+      "description": "Date of operation.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["buy", "sell"]
+    },
+    "wallet": {
+      "description": "Connection Wallet - Operation: One-to-Many.",
+      "$ref": "Wallet.schema.json"
+    },
+    "baseAsset": {
+      "description": "Connection Asset - Operation: One-to-Many.",
+      "$ref": "Asset.schema.json"
+    },
+    "quoteAsset": {
+      "description": "Connection Asset - Operation: One-to-Many.",
+      "$ref": "Asset.schema.json"
+    },
+    "quantity": {
+      "description": "Quantity of base asset to buy or sell according to operation type.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "sum": {
+      "description": "Sum of operation.",
+      "type": "number",
+      "minimum": 0
+    }
+  },
+  "required": ["date", "type", "wallet", "baseAsset", "quoteAsset", "quantity", "sum"]
+}

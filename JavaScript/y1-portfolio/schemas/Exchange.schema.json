@@ -1,0 +1,17 @@
+{
+  "$id": "Exchange.schema.json",
+  "title": "Exchange",
+  "description": "List of available exchanges.",
+  "type": "object",
+  "properties": {
+    "exchangeId": {
+      "description": "Unique Id.",
+      "type": "integer"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    }
+  },
+  "required": ["exchangeId", "name"]
+}

@@ -1,0 +1,26 @@
+{
+  "$id": "Asset.schema.json",
+  "title": "Asset",
+  "description": "List of available assets (currencies, cryptocurrencies, shares etc.)",
+  "type": "object",
+  "properties": {
+    "assetId": {
+      "description": "Unique Id.",
+      "type": "integer"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "symbol": {
+      "description": "Symbol of asset that exchange uses.",
+      "type": "string",
+      "maxLength": 10
+    },
+    "currency": {
+      "description": "Connection Currency - Asset: One-to-Many. If asset is a currency then it's ID is specified here.",
+      "$ref": "Currency.schema.json"
+    }
+  },
+  "required": ["assetId", "name"]
+}

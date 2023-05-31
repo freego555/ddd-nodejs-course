@@ -1,0 +1,33 @@
+{
+  "$id": "Rate.schema.json",
+  "title": "Rate",
+  "description": "Asset's rates by date and time.",
+  "type": "object",
+  "properties": {
+    "date": {
+      "description": "Date and time of rate.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "baseAsset": {
+      "description": "Connection Asset - Rate: One-to-Many. Base asset of current rate",
+      "$ref": "Asset.schema.json"
+    },
+    "quoteAsset": {
+      "description": "Connection Asset - Rate: One-to-Many. Quote asset of current rate",
+      "$ref": "Asset.schema.json"
+    },
+    "unit": {
+      "description": "Quantity of base asset.",
+      "type": "integer",
+      "minimum": 1,
+      "default": 1
+    },
+    "rate": {
+      "description": "Rate of quote asset relative to specified quantity base asset.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    }
+  },
+  "required": ["date", "baseAsset", "quoteAsset", "rate"]
+}

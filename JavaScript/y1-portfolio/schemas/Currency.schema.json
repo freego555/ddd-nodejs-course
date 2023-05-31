@@ -1,0 +1,17 @@
+{
+  "$id": "Currency.schema.json",
+  "title": "Currency",
+  "description": "List of FIAT currencies.",
+  "type": "object",
+  "properties": {
+    "currencyId": {
+      "description": "Unique Id.",
+      "type":"integer"
+    },
+    "name": {
+      "type":"string",
+      "maxLength": 255
+    }
+  },
+  "required": ["currencyId", "name"]
+}

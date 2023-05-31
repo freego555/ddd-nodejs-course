@@ -1,0 +1,21 @@
+{
+  "$id": "Wallet.schema.json",
+  "title": "Wallet",
+  "description": "List of wallets by exchange.",
+  "type": "object",
+  "properties": {
+    "walletId": {
+      "description": "Unique Id.",
+      "type": "integer"
+    },
+    "exchange": {
+      "description": "Connection Exchange - Wallet: One-to-Many.",
+      "$ref": "Exchange.schema.json"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    }
+  },
+  "required": ["walletId", "exchange", "name"]
+}
