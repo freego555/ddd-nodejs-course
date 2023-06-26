@@ -1,10 +1,10 @@
 {
   "$id": "Rate.schema.json",
   "title": "Rate",
-  "description": "Asset's rates by date and time.",
+  "description": "Asset's selling rates on date and time.",
   "type": "object",
   "properties": {
-    "date": {
+    "timestamp": {
       "description": "Date and time of rate.",
       "type": "string",
       "format": "date-time"
@@ -24,10 +24,10 @@
       "default": 1
     },
     "rate": {
-      "description": "Rate of quote asset relative to specified quantity base asset.",
+      "description": "Rate of quote asset relative to specified quantity of base asset.",
       "type": "number",
       "exclusiveMinimum": 0
     }
   },
-  "required": ["date", "baseAsset", "quoteAsset", "rate"]
+  "required": ["timestamp", "baseAsset", "quoteAsset", "rate"]
 }

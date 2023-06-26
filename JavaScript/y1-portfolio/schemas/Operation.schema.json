@@ -4,7 +4,11 @@
   "description": "Asset buy and sell operations.",
   "type": "object",
   "properties": {
-    "date": {
+    "operationId": {
+      "description": "Unique Id.",
+      "type": "integer"
+    },
+    "timestamp": {
       "description": "Date of operation.",
       "type": "string",
       "format": "date-time"
@@ -36,5 +40,5 @@
       "minimum": 0
     }
   },
-  "required": ["date", "type", "wallet", "baseAsset", "quoteAsset", "quantity", "sum"]
+  "required": ["operationId", "timestamp", "type", "wallet", "baseAsset", "quoteAsset", "quantity", "sum"]
 }
