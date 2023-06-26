@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS example;
-DROP USER IF EXISTS marcus;
-CREATE USER marcus WITH PASSWORD 'marcus';
-CREATE DATABASE example OWNER marcus;
+DROP USER IF EXISTS freego;
+CREATE USER freego WITH PASSWORD 'freego';
+CREATE DATABASE example OWNER freego;
 
