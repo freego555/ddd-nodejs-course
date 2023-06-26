@@ -65,3 +65,77 @@ CREATE TABLE "Session" (
 ALTER TABLE "Session" ADD CONSTRAINT "pkSession" PRIMARY KEY ("sessionId");
 ALTER TABLE "Session" ADD CONSTRAINT "fkSessionAccount" FOREIGN KEY ("accountId") REFERENCES "Account" ("accountId");
 CREATE UNIQUE INDEX "akSessionToken" ON "Session" ("token");
+
+
+-- Portfolio database structure
+
+CREATE TABLE "Currency" (
+  "currencyId" bigint generated always as identity,
+  "name" varchar(255) NOT NULL
+);
+
+ALTER TABLE "Currency" ADD CONSTRAINT "pkCurrency" PRIMARY KEY ("currencyId");
+CREATE UNIQUE INDEX "akCurrencyName" ON "Currency" ("name");
+
+CREATE TABLE "Exchange" (
+  "exchangeId" bigint generated always as identity,
+  "name" varchar(255) NOT NULL
+);
+
+ALTER TABLE "Exchange" ADD CONSTRAINT "pkExchange" PRIMARY KEY ("exchangeId");
+CREATE UNIQUE INDEX "akExchangeName" ON "Exchange" ("name");
+
+CREATE TABLE "Wallet" (
+  "walletId" bigint generated always as identity,
+  "exchangeId" bigint NOT NULL,
+  "name" varchar(255) NOT NULL
+);
+
+ALTER TABLE "Wallet" ADD CONSTRAINT "pkWallet" PRIMARY KEY ("walletId");
+ALTER TABLE "Wallet" ADD CONSTRAINT "fkWalletExchange" FOREIGN KEY ("exchangeId") REFERENCES "Exchange" ("exchangeId");
+CREATE UNIQUE INDEX "akWalletName" ON "Wallet" ("name");
+
+CREATE TABLE "Asset" (
+  "assetId" bigint generated always as identity,
+  "currencyId" bigint,
+  "name" varchar(255) NOT NULL,
+  "symbol" varchar(10)
+);
+
+ALTER TABLE "Asset" ADD CONSTRAINT "pkAsset" PRIMARY KEY ("assetId");
+ALTER TABLE "Asset" ADD CONSTRAINT "fkAssetCurrency" FOREIGN KEY ("currencyId") REFERENCES "Currency" ("currencyId");
+CREATE UNIQUE INDEX "akAssetName" ON "Asset" ("name");
+CREATE UNIQUE INDEX "akAssetSymbol" ON "Asset" ("symbol");
+
+CREATE TABLE "Rate" (
+  "timestamp" timestamp NOT NULL,
+  "baseAssetId" bigint NOT NULL,
+  "quoteAssetId" bigint NOT NULL,
+  "unit" bigint DEFAULT 1 NOT NULL,
+  "rate" numeric NOT NULL
+);
+
+ALTER TABLE "Rate" ADD CONSTRAINT "pkRate" PRIMARY KEY ("timestamp", "baseAssetId", "quoteAssetId");
+ALTER TABLE "Rate" ADD CONSTRAINT "fkRateBaseAsset" FOREIGN KEY ("baseAssetId") REFERENCES "Asset" ("assetId");
+ALTER TABLE "Rate" ADD CONSTRAINT "fkRateQuoteAsset" FOREIGN KEY ("quoteAssetId") REFERENCES "Asset" ("assetId");
+ALTER TABLE "Rate" ADD CONSTRAINT "RateUnit_Minimum" CHECK ("unit" >= 1);
+ALTER TABLE "Rate" ADD CONSTRAINT "RateRate_Minimum" CHECK ("rate" > 0);
+
+CREATE TYPE "operationType" AS ENUM ('buy', 'sell');
+CREATE TABLE "Operation" (
+  "operationId" bigint generated always as identity,
+  "timestamp" timestamp NOT NULL,
+  "type" "operationType" NOT NULL,
+  "walletId" bigint NOT NULL,
+  "baseAssetId" bigint NOT NULL,
+  "quoteAssetId" bigint NOT NULL,
+  "quantity" numeric NOT NULL,
+  "sum" numeric NOT NULL
+);
+
+ALTER TABLE "Operation" ADD CONSTRAINT "pkOperation" PRIMARY KEY ("operationId");
+ALTER TABLE "Operation" ADD CONSTRAINT "fkOperationWallet" FOREIGN KEY ("walletId") REFERENCES "Wallet" ("walletId");
+ALTER TABLE "Operation" ADD CONSTRAINT "fkOperationBaseAsset" FOREIGN KEY ("baseAssetId") REFERENCES "Asset" ("assetId");
+ALTER TABLE "Operation" ADD CONSTRAINT "fkOperationQuoteAsset" FOREIGN KEY ("quoteAssetId") REFERENCES "Asset" ("assetId");
+ALTER TABLE "Operation" ADD CONSTRAINT "OperationQuantity_Minimum" CHECK ("quantity" > 0);
+ALTER TABLE "Operation" ADD CONSTRAINT "OperationSum_Minimum" CHECK ("sum" >= 0);

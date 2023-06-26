@@ -23,3 +23,37 @@ INSERT INTO "AreaAccount" ("areaId", "accountId") VALUES
   (2, 2),
   (2, 3),
   (2, 4);
+
+
+-- Portfolio data examples
+
+INSERT INTO "Currency" ("name") VALUES
+  ('UAH'),
+  ('USD'),
+  ('EUR');
+
+INSERT INTO "Exchange" ("name") VALUES
+  ('Binance'),
+  ('OKEx'),
+  ('Just2Trade');
+
+INSERT INTO "Wallet" ("name", "exchangeId") VALUES
+  ('Binance Spot' , 1),
+  ('Binance Funding' , 1),
+  ('OKEx Spot' , 2),
+  ('OKEx Funding' , 2),
+  ('Just2Trade Global' , 3);
+
+INSERT INTO "Asset" ("name", "symbol", "currencyId") VALUES
+  ('UAH', 'UAH', 1),
+  ('Tether USD', 'USDT', 2),
+  ('Binance USD', 'BUSD', 2),
+  ('Bitcoin', 'BTC', NULL),
+  ('Ethereum', 'ETH', NULL);
+
+INSERT INTO "Rate" ("timestamp", "baseAssetId", "quoteAssetId", "unit", "rate") VALUES
+  ('today'::date, 4, 2, DEFAULT, 20000),
+  ('today'::date, 5, 2, DEFAULT, 1500);
+
+INSERT INTO "Operation" ("timestamp", "type", "walletId", "baseAssetId", "quoteAssetId", "quantity", "sum") VALUES
+  ('now', 'buy', 1, 4, 2, 0.001, 20);
