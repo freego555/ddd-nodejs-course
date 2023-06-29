@@ -108,6 +108,7 @@ CREATE UNIQUE INDEX "akAssetName" ON "Asset" ("name");
 CREATE UNIQUE INDEX "akAssetSymbol" ON "Asset" ("symbol");
 
 CREATE TABLE "Rate" (
+  "rateId" bigint generated always as identity,
   "timestamp" timestamp NOT NULL,
   "baseAssetId" bigint NOT NULL,
   "quoteAssetId" bigint NOT NULL,
@@ -115,7 +116,8 @@ CREATE TABLE "Rate" (
   "rate" numeric NOT NULL
 );
 
-ALTER TABLE "Rate" ADD CONSTRAINT "pkRate" PRIMARY KEY ("timestamp", "baseAssetId", "quoteAssetId");
+ALTER TABLE "Rate" ADD CONSTRAINT "pkRate" PRIMARY KEY ("rateId");
+ALTER TABLE "Rate" ADD CONSTRAINT "Rate_Unique" UNIQUE ("timestamp", "baseAssetId", "quoteAssetId");
 ALTER TABLE "Rate" ADD CONSTRAINT "fkRateBaseAsset" FOREIGN KEY ("baseAssetId") REFERENCES "Asset" ("assetId");
 ALTER TABLE "Rate" ADD CONSTRAINT "fkRateQuoteAsset" FOREIGN KEY ("quoteAssetId") REFERENCES "Asset" ("assetId");
 ALTER TABLE "Rate" ADD CONSTRAINT "RateUnit_Minimum" CHECK ("unit" >= 1);
