@@ -62,7 +62,29 @@ const scaffold = (url) => {
       restore: ['token'],
     },
     messenger: {
-      method: ['arg'],
+      addArea: ['name'],
+      changeArea: ['areaId, name'],
+      deleteArea: ['areaId'],
+      addAccountToArea: ['accountId', 'areaId'],
+      deleteAccountFromArea: ['accountId', 'areaId'],
+      sendMessage: ['areaId', 'text'],
+    },
+    portfolio: {
+      addCurrency: ['name'],
+      addExchange: ['name'],
+      addWallet: ['name', 'exchangeId'],
+      addAsset: ['name', 'currencyId', 'symbol'],
+      addRate: ['timestamp', 'baseAssetId', 'quoteAssetId', 'unit', 'rate'],
+      deleteRate: ['rateId'],
+      addOperation: [
+        'timestamp',
+        'type',
+        'walletId',
+        'baseAssetId',
+        'quoteAssetId',
+        'quantity',
+        'sum',
+      ],
     },
   });
   const data = await api.auth.signin('marcus', 'marcus');
