@@ -23,5 +23,5 @@ module.exports = {
     database: 'postgres',
     user: 'postgres',
     password: 'postgres',
-  }
+  },
 };

@@ -23,7 +23,7 @@
     console.log({
       method: 'messenger.deleteAccountFromArea',
       accountId,
-      areaId
+      areaId,
     });
     return { status: 'ok' };
   },
